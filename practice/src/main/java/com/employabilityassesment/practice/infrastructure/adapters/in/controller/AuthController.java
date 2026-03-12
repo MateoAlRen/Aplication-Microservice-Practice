@@ -1,18 +1,14 @@
 package com.employabilityassesment.practice.infrastructure.adapters.in.controller;
 
-import com.employabilityassesment.practice.domain.exception.InvalidCredentialsException;
-import com.employabilityassesment.practice.domain.exception.UserAlreadyExistsException;
 import com.employabilityassesment.practice.domain.model.User;
 import com.employabilityassesment.practice.domain.ports.in.CreateUserUseCase;
 import com.employabilityassesment.practice.domain.ports.in.LogInUseCase;
-import com.employabilityassesment.practice.domain.ports.out.UserRepositoryPort;
 import com.employabilityassesment.practice.infrastructure.adapters.in.dto.AuthResponse;
 import com.employabilityassesment.practice.infrastructure.adapters.in.dto.LoginRequest;
 import com.employabilityassesment.practice.infrastructure.adapters.in.dto.UserRegisterRequest;
 import com.employabilityassesment.practice.infrastructure.adapters.in.webmapper.UserWebMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

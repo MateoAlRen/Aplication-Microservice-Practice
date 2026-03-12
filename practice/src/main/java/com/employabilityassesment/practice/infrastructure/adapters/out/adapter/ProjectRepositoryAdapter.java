@@ -3,7 +3,6 @@ package com.employabilityassesment.practice.infrastructure.adapters.out.adapter;
 import com.employabilityassesment.practice.domain.model.Project;
 import com.employabilityassesment.practice.domain.ports.out.ProjectRepositoryPort;
 import com.employabilityassesment.practice.infrastructure.adapters.out.ProjectJpaRepository;
-import com.employabilityassesment.practice.infrastructure.adapters.out.TaskJpaRepository;
 import com.employabilityassesment.practice.infrastructure.adapters.out.entity.ProjectEntity;
 import com.employabilityassesment.practice.infrastructure.adapters.out.mapper.ProjectMapper;
 import lombok.RequiredArgsConstructor;
