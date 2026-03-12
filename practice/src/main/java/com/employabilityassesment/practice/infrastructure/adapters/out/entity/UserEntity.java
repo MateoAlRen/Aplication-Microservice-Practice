@@ -17,8 +17,7 @@ import java.util.UUID;
 public class UserEntity {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    @Column(columnDefinition = "BINARY(16")
+    @Column(columnDefinition = "BINARY(16)")
     private UUID userId = UUID.randomUUID();
 
     @Column(nullable = false)

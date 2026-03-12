@@ -16,7 +16,6 @@ import java.util.UUID;
 public class CreateProjectUseCaseImpl implements CreateProjectUseCase {
     private final ProjectRepositoryPort projectRepositoryPort;
     private final CurrentUserPort currentUserPort;
-    private final NotificationPort notificationPort;
 
     @Override
     public void CreateProject(String projectName) {
