@@ -3,6 +3,7 @@ package com.employabilityassesment.practice.infrastructure.adapters.out.adapter;
 import com.employabilityassesment.practice.domain.ports.out.CurrentUserPort;
 import com.employabilityassesment.practice.infrastructure.security.JwtService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
@@ -15,7 +16,7 @@ public class CurrentUserAdapter implements CurrentUserPort {
 
     @Override
     public UUID getCurrentUser() {
-        String token = SecurityContextHolder.getContext().getAuthentication().getCredentials().toString();
-        return jwtService.getCurrentUser(token);
+        Authentication token = SecurityContextHolder.getContext().getAuthentication();
+        return (UUID) token.getPrincipal();
     }
 }

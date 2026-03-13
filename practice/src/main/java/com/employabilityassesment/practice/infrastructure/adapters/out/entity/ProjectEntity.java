@@ -20,9 +20,9 @@ public class ProjectEntity {
     @GeneratedValue (strategy = GenerationType.UUID)
     private UUID projectId;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "user_id")
-    private UserEntity owner;
+    private UserEntity ownerId;
 
     @Column (nullable = false)
     private String projectName;

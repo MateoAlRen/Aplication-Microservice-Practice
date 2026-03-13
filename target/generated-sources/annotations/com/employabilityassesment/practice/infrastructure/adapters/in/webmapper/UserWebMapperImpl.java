@@ -1,13 +1,13 @@
 package com.employabilityassesment.practice.infrastructure.adapters.in.webmapper;
 
 import com.employabilityassesment.practice.domain.model.User;
-import com.employabilityassesment.practice.infrastructure.adapters.in.dto.UserRegisterRequest;
+import com.employabilityassesment.practice.infrastructure.adapters.in.dto.request.UserRegisterRequest;
 import javax.annotation.processing.Generated;
 import org.springframework.stereotype.Component;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2026-03-12T03:39:16-0500",
+    date = "2026-03-13T13:35:53-0500",
     comments = "version: 1.6.0, compiler: javac, environment: Java 21.0.8 (Amazon.com Inc.)"
 )
 @Component

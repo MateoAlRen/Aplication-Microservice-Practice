@@ -17,7 +17,7 @@ public class ActivateProjectUseCaseImpl implements ActivateProjectUseCase {
     private final CurrentUserPort currentUserPort;
 
     @Override
-    public void ActivateProject(UUID projectId) {
+    public void activateProject(UUID projectId) {
         Project project = projectRepositoryPort.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project has not been found!"));
 

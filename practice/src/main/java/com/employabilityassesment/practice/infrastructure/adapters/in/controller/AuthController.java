@@ -3,9 +3,9 @@ package com.employabilityassesment.practice.infrastructure.adapters.in.controlle
 import com.employabilityassesment.practice.domain.model.User;
 import com.employabilityassesment.practice.domain.ports.in.CreateUserUseCase;
 import com.employabilityassesment.practice.domain.ports.in.LogInUseCase;
-import com.employabilityassesment.practice.infrastructure.adapters.in.dto.AuthResponse;
-import com.employabilityassesment.practice.infrastructure.adapters.in.dto.LoginRequest;
-import com.employabilityassesment.practice.infrastructure.adapters.in.dto.UserRegisterRequest;
+import com.employabilityassesment.practice.infrastructure.adapters.in.dto.response.AuthResponse;
+import com.employabilityassesment.practice.infrastructure.adapters.in.dto.request.LoginRequest;
+import com.employabilityassesment.practice.infrastructure.adapters.in.dto.request.UserRegisterRequest;
 import com.employabilityassesment.practice.infrastructure.adapters.in.webmapper.UserWebMapper;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

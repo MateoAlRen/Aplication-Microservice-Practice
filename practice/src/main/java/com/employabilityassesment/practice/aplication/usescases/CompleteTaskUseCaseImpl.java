@@ -19,13 +19,17 @@ public class CompleteTaskUseCaseImpl implements CompleteTaskUseCase {
     private final CurrentUserPort currentUserPort;
 
     @Override
-    public void CompleteTask(UUID taskId) {
+    public void completeTask(UUID taskId) {
         Task task = taskRepositoryPort.findById(taskId)
                 .orElseThrow(() -> new RuntimeException("Task has been not found!"));
 
         UUID projectId = task.getProjectId();
         Project project =  projectRepositoryPort.findById(projectId)
                 .orElseThrow(() -> new RuntimeException("Project has been not found!"));
+
+        if (!project.getOwnerId().equals(currentUserPort.getCurrentUser())) {
+            throw new RuntimeException("Forbidden");
+        }
 
         task.setCompleted(true);
         taskRepositoryPort.saveTask(task);

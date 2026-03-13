@@ -1,5 +1,6 @@
 package com.employabilityassesment.practice.infrastructure.adapters.in.exception;
 
+import com.employabilityassesment.practice.domain.exception.BusinessException;
 import com.employabilityassesment.practice.domain.exception.InvalidCredentialsException;
 import com.employabilityassesment.practice.domain.exception.UserAlreadyExistsException;
 import org.springframework.http.HttpStatus;
@@ -19,4 +20,10 @@ public class GlobalExceptionHandler {
     public ResponseEntity<String> handleUserAlreadyExists(UserAlreadyExistsException ex){
         return ResponseEntity.status(HttpStatus.CONFLICT).body(ex.getMessage());
     }
+
+    @ExceptionHandler(BusinessException.class)
+    public ResponseEntity<String> handleBusinessException(BusinessException ex){
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(ex.getMessage());
+    }
+
 }

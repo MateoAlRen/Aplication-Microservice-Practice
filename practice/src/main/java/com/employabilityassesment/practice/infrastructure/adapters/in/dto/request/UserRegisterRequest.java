@@ -1,4 +1,4 @@
-package com.employabilityassesment.practice.infrastructure.adapters.in.dto;
+package com.employabilityassesment.practice.infrastructure.adapters.in.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 

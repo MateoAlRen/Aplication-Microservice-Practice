@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
 import java.util.UUID;
 
 @Repository
@@ -19,4 +20,5 @@ public interface ProjectJpaRepository extends JpaRepository<ProjectEntity, UUID>
         AND t.isDeleted = false
     """)
     boolean hasActiveTask(@Param("projectId") UUID projectId);
+    List<ProjectEntity> findByOwnerId_UserId(UUID ownerId);
 }

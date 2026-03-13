@@ -11,7 +11,7 @@ public class Project {
 
     public Project () {}
 
-    public Project (UUID projectId,UUID ownerId, String projectName, ProjectStatus projectStatus, boolean isDeleted){
+    public Project (UUID projectId,UUID ownerId, String projectName){
         this.projectId = projectId;
         this.ownerId = ownerId;
         this.projectName = projectName;
@@ -19,8 +19,6 @@ public class Project {
         this.isDeleted = false;
     }
 
-    public Project(UUID uuid, UUID currentUser, String projectName) {
-    }
 
     public UUID getProjectId() {
         return projectId;

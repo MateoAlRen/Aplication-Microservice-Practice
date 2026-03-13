@@ -8,6 +8,7 @@ import com.employabilityassesment.practice.infrastructure.adapters.out.mapper.Pr
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -36,4 +37,23 @@ public class ProjectRepositoryAdapter implements ProjectRepositoryPort {
                 .filter(p -> !p.isDeleted())
                 .map(projectMapper::toModel);
     }
+
+    @Override
+    public List<Project> findAllProjects(){
+        return projectJpaRepository
+                .findAll()
+                .stream()
+                .map(projectMapper::toModel)
+                .toList();
+    }
+
+    @Override
+    public List<Project> findAllProjectsByOwnerId(UUID ownerId){
+        return  projectJpaRepository
+                .findByOwnerId_UserId(ownerId)
+                .stream()
+                .map(projectMapper::toModel)
+                .toList();
+    }
+
 }

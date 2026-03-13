@@ -1,12 +1,11 @@
 package com.employabilityassesment.practice.aplication.usescases;
 
+import com.employabilityassesment.practice.domain.exception.BusinessException;
 import com.employabilityassesment.practice.domain.model.Project;
 import com.employabilityassesment.practice.domain.ports.in.CreateProjectUseCase;
 import com.employabilityassesment.practice.domain.ports.out.CurrentUserPort;
-import com.employabilityassesment.practice.domain.ports.out.NotificationPort;
 import com.employabilityassesment.practice.domain.ports.out.ProjectRepositoryPort;
 import lombok.RequiredArgsConstructor;
-import lombok.ToString;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -18,9 +17,18 @@ public class CreateProjectUseCaseImpl implements CreateProjectUseCase {
     private final CurrentUserPort currentUserPort;
 
     @Override
-    public void CreateProject(String projectName) {
+    public void createProject(String projectName) {
+
+        if (projectName == null){
+            throw new BusinessException("The project need a name!");
+        }
+
+        if (currentUserPort.getCurrentUser() == null){
+            throw new RuntimeException("Forbidden");
+        }
+
         Project project = new Project(
-                UUID.randomUUID(),
+                null,
                 currentUserPort.getCurrentUser(),
                 projectName
         );
