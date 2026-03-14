@@ -8,6 +8,7 @@ import com.employabilityassesment.practice.infrastructure.adapters.out.mapper.Ta
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
@@ -30,5 +31,14 @@ public class TaskRepositoryAdapter implements TaskRepositoryPort {
         TaskEntity taskEntity = taskMapper.toEntity(task);
         TaskEntity saved = taskJpaRepository.save(taskEntity);
         return taskMapper.toModel(saved);
+    }
+
+    @Override
+    public List<Task> findByProjectId(UUID projectId) {
+        return taskJpaRepository
+                .findByProject_ProjectIdAndIsDeletedFalse(projectId)
+                .stream()
+                .map(taskMapper::toModel)
+                .toList();
     }
 }

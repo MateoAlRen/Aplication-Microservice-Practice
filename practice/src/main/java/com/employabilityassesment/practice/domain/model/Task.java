@@ -12,7 +12,7 @@ public class Task {
     public Task() {
     }
 
-    public Task(UUID taskId, UUID projectId, String taskTitle, boolean isCompleted, boolean isDeleted) {
+    public Task(UUID taskId, UUID projectId, String taskTitle) {
         this.taskId = taskId;
         this.projectId = projectId;
         this.taskTitle = taskTitle;
@@ -20,8 +20,6 @@ public class Task {
         this.isDeleted = false;
     }
 
-    public Task(UUID uuid, UUID projectId, String taskName) {
-    }
 
     public UUID getTaskId() {
         return taskId;

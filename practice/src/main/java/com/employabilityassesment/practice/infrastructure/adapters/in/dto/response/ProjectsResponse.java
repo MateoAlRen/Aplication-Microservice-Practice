@@ -7,6 +7,7 @@ import java.util.UUID;
 public record ProjectsResponse(
         UUID projectId,
         String projectName,
-        ProjectStatus projectStatus
+        ProjectStatus projectStatus,
+        boolean isDeleted
         ) {
 }

@@ -28,8 +28,8 @@ public class CreateTaskUseCaseImpl implements CreateTaskUseCase {
         }
 
         Task task = new Task(
-                UUID.randomUUID(),
-                projectId,
+                null,
+                project.getProjectId(),
                 taskName
         );
 

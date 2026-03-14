@@ -13,7 +13,8 @@ public class ProjectWebMapper {
         return new ProjectsResponse(
                 project.getProjectId(),
                 project.getProjectName(),
-                project.getProjectStatus()
+                project.getProjectStatus(),
+                project.isDeleted()
         );
     }
 

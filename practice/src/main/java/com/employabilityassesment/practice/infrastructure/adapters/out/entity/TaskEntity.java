@@ -19,10 +19,9 @@ public class TaskEntity {
     @Column(columnDefinition = "BINARY(16)")
     private UUID taskId = UUID.randomUUID();
 
-    @OneToOne
-    @JoinColumn(name = "project_id")
+    @ManyToOne
+    @JoinColumn(name = "project_id", nullable = false)
     private ProjectEntity project;
-
 
     @Column(nullable = false)
     private String taskTitle;
