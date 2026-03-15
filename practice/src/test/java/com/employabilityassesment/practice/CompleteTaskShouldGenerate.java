@@ -1,13 +1,10 @@
 package com.employabilityassesment.practice;
 
-import com.employabilityassesment.practice.aplication.usescases.ActivateProjectUseCaseImpl;
+import com.employabilityassesment.practice.aplication.usescases.CompleteTaskUseCaseImpl;
 import com.employabilityassesment.practice.domain.model.Audit;
 import com.employabilityassesment.practice.domain.model.Project;
-import com.employabilityassesment.practice.domain.model.ProjectStatus;
-import com.employabilityassesment.practice.domain.ports.out.AuditLogPort;
-import com.employabilityassesment.practice.domain.ports.out.CurrentUserPort;
-import com.employabilityassesment.practice.domain.ports.out.NotificationPort;
-import com.employabilityassesment.practice.domain.ports.out.ProjectRepositoryPort;
+import com.employabilityassesment.practice.domain.model.Task;
+import com.employabilityassesment.practice.domain.ports.out.*;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -20,7 +17,10 @@ import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
-class PracticeApplicationTests {
+class CompleteTaskShouldGenerate {
+
+    @Mock
+    private TaskRepositoryPort taskRepositoryPort;
 
     @Mock
     private ProjectRepositoryPort projectRepositoryPort;
@@ -35,13 +35,19 @@ class PracticeApplicationTests {
     private AuditLogPort auditLogPort;
 
     @InjectMocks
-    private ActivateProjectUseCaseImpl activateProjectUseCase;
+    private CompleteTaskUseCaseImpl completeTaskUseCase;
 
     @Test
-    void ActivateProject_WithTasks_ShouldSucceed() {
+    void CompleteTask_ShouldGenerateAuditAndNotification(){
+        UUID taskId = UUID.randomUUID();
         UUID projectId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
+
+        Task task = new Task(taskId, projectId, "taskName");
         Project project = new Project(projectId, ownerId, "projectName");
+
+        Mockito.when(taskRepositoryPort.findById(Mockito.any(UUID.class)))
+                .thenReturn(Optional.of(task));
 
         Mockito.when(projectRepositoryPort.findById(Mockito.any(UUID.class)))
                 .thenReturn(Optional.of(project));
@@ -49,15 +55,11 @@ class PracticeApplicationTests {
         Mockito.when(currentUserPort.getCurrentUser())
                 .thenReturn(ownerId);
 
-        Mockito.when(projectRepositoryPort.hasActiveTask(Mockito.any(UUID.class)))
-                .thenReturn(true);
+        completeTaskUseCase.completeTask(task.getTaskId());
 
-        activateProjectUseCase.activateProject(projectId);
-
-        Assertions.assertEquals(ProjectStatus.ACTIVE, project.getProjectStatus());
-        Mockito.verify(notificationPort).sendNotification(Mockito.anyString());
+        Assertions.assertTrue(task.isCompleted());
+        Mockito.verify(taskRepositoryPort).saveTask(task);
         Mockito.verify(auditLogPort).register(Mockito.any(Audit.class));
-        Mockito.verify(projectRepositoryPort).saveProject(project);
+        Mockito.verify(notificationPort).sendNotification(Mockito.anyString());
     }
-
 }

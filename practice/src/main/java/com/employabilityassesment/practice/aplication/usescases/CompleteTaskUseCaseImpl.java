@@ -1,5 +1,6 @@
 package com.employabilityassesment.practice.aplication.usescases;
 
+import com.employabilityassesment.practice.domain.exception.BusinessException;
 import com.employabilityassesment.practice.domain.model.Audit;
 import com.employabilityassesment.practice.domain.model.AuditAction;
 import com.employabilityassesment.practice.domain.model.Project;
@@ -31,6 +32,10 @@ public class CompleteTaskUseCaseImpl implements CompleteTaskUseCase {
 
         if (!project.getOwnerId().equals(currentUserPort.getCurrentUser())) {
             throw new RuntimeException("Forbidden");
+        }
+
+        if (task.isCompleted()){
+            throw new BusinessException("Task is already completed!");
         }
 
         task.setCompleted(true);

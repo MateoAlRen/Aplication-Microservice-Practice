@@ -1,7 +1,7 @@
 package com.employabilityassesment.practice;
 
 import com.employabilityassesment.practice.aplication.usescases.ActivateProjectUseCaseImpl;
-import com.employabilityassesment.practice.domain.model.Audit;
+import com.employabilityassesment.practice.domain.exception.BusinessException;
 import com.employabilityassesment.practice.domain.model.Project;
 import com.employabilityassesment.practice.domain.model.ProjectStatus;
 import com.employabilityassesment.practice.domain.ports.out.AuditLogPort;
@@ -16,11 +16,12 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.util.Objects;
 import java.util.Optional;
 import java.util.UUID;
 
 @ExtendWith(MockitoExtension.class)
-class PracticeApplicationTests {
+class ActivateProjectShouldFail {
 
     @Mock
     private ProjectRepositoryPort projectRepositoryPort;
@@ -38,26 +39,30 @@ class PracticeApplicationTests {
     private ActivateProjectUseCaseImpl activateProjectUseCase;
 
     @Test
-    void ActivateProject_WithTasks_ShouldSucceed() {
+    void ActivateProjectWithoutTask_ShouldFail(){
         UUID projectId = UUID.randomUUID();
         UUID ownerId = UUID.randomUUID();
-        Project project = new Project(projectId, ownerId, "projectName");
+
+        Project project = new Project(projectId,ownerId,"projectName");
 
         Mockito.when(projectRepositoryPort.findById(Mockito.any(UUID.class)))
                 .thenReturn(Optional.of(project));
 
+        Mockito.when(projectRepositoryPort.hasActiveTask(Mockito.any(UUID.class)))
+                .thenReturn(false);
+
         Mockito.when(currentUserPort.getCurrentUser())
                 .thenReturn(ownerId);
 
-        Mockito.when(projectRepositoryPort.hasActiveTask(Mockito.any(UUID.class)))
-                .thenReturn(true);
+        BusinessException exception = Assertions.assertThrows(
+                BusinessException.class,
+                () -> activateProjectUseCase.activateProject(projectId)
+        );
 
-        activateProjectUseCase.activateProject(projectId);
+        Assertions.assertEquals(ProjectStatus.DRAFT, project.getProjectStatus());
+        Mockito.verify(projectRepositoryPort,Mockito.never()).saveProject(project);
+        Mockito.verify(notificationPort, Mockito.never()).sendNotification(Mockito.anyString());
+        Mockito.verify(auditLogPort, Mockito.never()).register(Mockito.any());
 
-        Assertions.assertEquals(ProjectStatus.ACTIVE, project.getProjectStatus());
-        Mockito.verify(notificationPort).sendNotification(Mockito.anyString());
-        Mockito.verify(auditLogPort).register(Mockito.any(Audit.class));
-        Mockito.verify(projectRepositoryPort).saveProject(project);
     }
-
 }
